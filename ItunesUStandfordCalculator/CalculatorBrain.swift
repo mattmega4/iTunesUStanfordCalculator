@@ -63,7 +63,7 @@ struct CalculatorBrain {
   
   private mutating func performPendingBinaryOperation() {
     if pendingBinaryOperation != nil && accumulator != nil {
-      accumulator = pendingBinaryOperation!.perform(with: accumulator!)
+      accumulator = NSNumber(value: pendingBinaryOperation!.perform(with: accumulator!)).doubleValue
       pendingBinaryOperation = nil
     }
   }
@@ -74,13 +74,10 @@ struct CalculatorBrain {
     pendingBinaryOperation = nil
   }
   
-//  private func checkIfWholeNumber(displayedDouble: Double) -> Int {
-//    if displayedDouble.truncatingRemainder(dividingBy: 1) == 0 {
-//      return Int(displayedDouble)
-//    } else {
-//      return //
-//    }
-//  }
+  private func checkIfWholeNumber(displayedDouble: Double) -> Double {
+    let cleanDouble = NSNumber(value: displayedDouble).doubleValue
+    return cleanDouble
+  }
   //
   
   
@@ -99,7 +96,7 @@ struct CalculatorBrain {
   
   var result: Double? {
     get {
-      return accumulator
+      return accumulator?)
     }
   }
 }

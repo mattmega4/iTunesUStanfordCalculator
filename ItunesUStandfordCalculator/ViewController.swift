@@ -47,7 +47,7 @@ class ViewController: UIViewController {
     }
     
     if let result = brain.result {
-      displayValue = result
+      displayValue = NSNumber(value: result).doubleValue
     }
   }
   
