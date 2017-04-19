@@ -25,27 +25,18 @@ class ViewController: UIViewController {
     }
   }
   
-  
-  
-  
-  
   @IBAction func touchDigit(_ sender: UIButton) {
-    
     let digit = sender.currentTitle!
-    
     if userIsInTheMiddleOfTyping {
-      let textCurrentlyInDisplay + digit
+      let textCurrentlyInDisplay = display.text!
+      display.text = textCurrentlyInDisplay + digit
     } else {
       display.text = digit
       userIsInTheMiddleOfTyping = true
     }
-    
-    
   }
   
-  
   @IBAction func performOperation(_ sender: UIButton) {
-    
     if userIsInTheMiddleOfTyping {
       brain.setOperand(displayValue)
       userIsInTheMiddleOfTyping = false
@@ -58,7 +49,6 @@ class ViewController: UIViewController {
     if let result = brain.result {
       displayValue = result
     }
-    
   }
   
   

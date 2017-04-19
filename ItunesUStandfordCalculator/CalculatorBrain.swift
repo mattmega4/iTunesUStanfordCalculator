@@ -11,27 +11,29 @@ import Foundation
 struct CalculatorBrain {
   
   private var accumulator: Double?
-  private var  pendingBinaryOperation: PendingBinaryOperation?
+  private var pendingBinaryOperation: PendingBinaryOperation?
   
   private enum Operation {
     case constant(Double)
     case unaryOperation((Double) -> Double)
     case binaryOperation((Double, Double) -> Double)
     case equals
+    case clear
   }
   
   private var operations: Dictionary<String, Operation> = [
-    "π" : Operation.constant(Double.pi),
-    "e" : Operation.constant(M_E),
-    "": Operation.unaryOperation(sqrt),
-    "" : Operation.unaryOperation(cos),
-    "" : Operation.unaryOperation({ -$0 }),
-    "" : Operation.binaryOperation({ $0 * $1 }),
-    "" : Operation.binaryOperation({ $0 / $1 }),
-    "" : Operation.binaryOperation({ $0 + $1 }),
-    "" : Operation.binaryOperation({ $0 - $1 }),
-    "" : Operation.equals
-    
+    //    "π" : Operation.constant(Double.pi),
+    //    "e" : Operation.constant(M_E),
+    //    "": Operation.unaryOperation(sqrt),
+    //    "" : Operation.unaryOperation(cos),
+    "+/−" : Operation.unaryOperation({ -$0 }),
+    "×" : Operation.binaryOperation({ $0 * $1 }),
+    "÷" : Operation.binaryOperation({ $0 / $1 }),
+    "+" : Operation.binaryOperation({ $0 + $1 }),
+    "−" : Operation.binaryOperation({ $0 - $1 }),
+    //    "%" : Operation.binaryOperation({ ? }),
+    "=" : Operation.equals,
+    "AC" : Operation.clear
   ]
   
   
@@ -52,6 +54,8 @@ struct CalculatorBrain {
         }
       case .equals:
         performPendingBinaryOperation()
+      case .clear:
+        clearAll()
       }
     }
   }
@@ -64,6 +68,20 @@ struct CalculatorBrain {
     }
   }
   
+  //
+  private mutating func clearAll() {
+    accumulator = 0
+    pendingBinaryOperation = nil
+  }
+  
+//  private func checkIfWholeNumber(displayedDouble: Double) -> Int {
+//    if displayedDouble.truncatingRemainder(dividingBy: 1) == 0 {
+//      return Int(displayedDouble)
+//    } else {
+//      return //
+//    }
+//  }
+  //
   
   
   private struct PendingBinaryOperation {
